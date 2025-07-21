@@ -10,6 +10,7 @@ import type { Props as MediaProps } from '../types'
 
 import { cssVariables } from '@/cssVariables'
 import { getClientSideURL } from '@/utilities/getURL'
+import DeferredImage from '@/components/DeferredImage'
 
 const { breakpoints } = cssVariables
 
@@ -28,6 +29,8 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     size: sizeFromProps,
     src: srcFromProps,
     loading: loadingFromProps,
+    role,
+    'aria-hidden': ariaHidden,
   } = props
 
   let width: number | undefined
@@ -36,18 +39,25 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let src: StaticImageData | string = srcFromProps || ''
 
   if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
+    const { alt: altFromResource, height: fullHeight, url, width: fullWidth, filename } = resource
 
     width = fullWidth!
     height = fullHeight!
-    alt = altFromResource || ''
+
+    // Improve alt text handling by using the provided alt text, or falling back to filename
+    // If no alt text is available, use an empty string for decorative images
+    alt =
+      altFromProps ||
+      altFromResource ||
+      (filename ? filename.replace(/[-_]/g, ' ').replace(/\.[^/.]+$/, '') : '') ||
+      ''
 
     const cacheTag = resource.updatedAt
 
     src = `${getClientSideURL()}${url}?${cacheTag}`
   }
 
-  const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
+  // DeferredImage handles loading strategy internally based on priority
 
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
   const sizes = sizeFromProps
@@ -58,19 +68,20 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
 
   return (
     <picture className={cn(pictureClassName)}>
-      <NextImage
-        alt={alt || ''}
+      <DeferredImage
+        alt={alt || 'Aran Cucine image'}
         className={cn(imgClassName)}
         fill={fill}
         height={!fill ? height : undefined}
         placeholder="blur"
         blurDataURL={placeholderBlur}
-        priority={priority}
+        priority={priority || loadingFromProps === 'eager'}
         quality={100}
-        loading={loading}
         sizes={sizes}
         src={src}
         width={!fill ? width : undefined}
+        role={role}
+        aria-hidden={ariaHidden}
       />
     </picture>
   )

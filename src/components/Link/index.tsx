@@ -19,6 +19,10 @@ type CMSLinkType = {
   type?: 'custom' | 'reference' | null
   url?: string | null
   onClick?: () => void
+  // Accessibility attributes
+  'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | boolean
+  'aria-label'?: string
+  role?: string
 }
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
@@ -33,6 +37,9 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     size: sizeFromProps,
     url,
     onClick,
+    'aria-current': ariaCurrent,
+    'aria-label': ariaLabel,
+    role,
   } = props
 
   const href =
@@ -50,7 +57,15 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   /* Ensure we don't break any styles set by richText */
   if (appearance === 'inline') {
     return (
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps} onClick={onClick}>
+      <Link 
+        className={cn(className)} 
+        href={href || url || ''} 
+        {...newTabProps} 
+        onClick={onClick}
+        aria-current={ariaCurrent}
+        aria-label={ariaLabel}
+        role={role}
+      >
         {label && label}
         {children && children}
       </Link>
@@ -59,7 +74,14 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
 
   return (
     <Button asChild className={className} size={size} variant={appearance} onClick={onClick}>
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <Link 
+        className={cn(className)} 
+        href={href || url || ''} 
+        {...newTabProps}
+        aria-current={ariaCurrent}
+        aria-label={ariaLabel}
+        role={role}
+      >
         {label && label}
         {children && children}
       </Link>

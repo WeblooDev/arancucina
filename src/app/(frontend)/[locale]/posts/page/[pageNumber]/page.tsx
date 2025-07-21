@@ -5,16 +5,18 @@ import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
-import PageClient from './page.client'
 import { notFound } from 'next/navigation'
+import PageClient from './page.client'
 
 export const revalidate = 600
 
+interface PageParams {
+  pageNumber: string
+  locale: string
+}
+
 type Args = {
-  params: Promise<{
-    pageNumber: string
-  }>
+  params: Promise<PageParams>
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
@@ -63,9 +65,19 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { pageNumber } = await paramsPromise
+  const { pageNumber, locale } = await paramsPromise
+  const { getServerSideURL } = await import('@/utilities/getURL')
+  
+  // Construct the canonical URL for paginated posts page
+  const serverUrl = getServerSideURL()
+  const localePath = locale !== 'en' ? `/${locale}` : ''
+  const canonicalUrl = `${serverUrl}${localePath}/posts/page/${pageNumber}`
+  
   return {
     title: `Payload Website Template Posts Page ${pageNumber || ''}`,
+    alternates: {
+      canonical: canonicalUrl,
+    },
   }
 }
 
@@ -77,12 +89,9 @@ export async function generateStaticParams() {
   })
 
   const totalPages = Math.ceil(totalDocs / 10)
-
-  const pages: { pageNumber: string }[] = []
-
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push({ pageNumber: String(i) })
-  }
-
-  return pages
+  
+  // Use Array.from with mapping function instead of manual array building
+  return Array.from({ length: totalPages }, (_, i) => ({
+    pageNumber: String(i + 1)
+  }))
 }

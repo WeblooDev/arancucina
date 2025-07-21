@@ -4,7 +4,7 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload, TypedLocale, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import { cache } from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
@@ -13,7 +13,6 @@ import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { cn } from '@/utilities/ui'
-import { Locale } from '@/i18n/routing'
 
 export async function generateStaticParams() {
   const locales = ['en', 'fr'] as const
@@ -48,11 +47,13 @@ export async function generateStaticParams() {
   return allParams.flat()
 }
 
+interface PageParams {
+  slug?: string
+  locale: TypedLocale
+}
+
 type Args = {
-  params: Promise<{
-    slug?: string
-    locale: TypedLocale
-  }>
+  params: Promise<PageParams>
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
@@ -118,7 +119,15 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     locale,
   })
 
-  return generateMeta({ doc: page })
+  // Construct the path for this page
+  // For home page, use root path; otherwise use the slug
+  const path = slug === 'home' ? '/' : `/${slug}`
+
+  return generateMeta({
+    doc: page,
+    locale,
+    path,
+  })
 }
 
 const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: TypedLocale }) => {

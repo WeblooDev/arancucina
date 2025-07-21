@@ -5,13 +5,20 @@ import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
 import PageClient from './page.client'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
-export default async function Page() {
+interface PageParams {
+  locale: string
+}
+
+type Args = {
+  params: Promise<PageParams>
+}
+
+export default async function Page({ params }: Args) {
   const payload = await getPayload({ config: configPromise })
 
   const posts = await payload.find({
@@ -56,8 +63,19 @@ export default async function Page() {
   )
 }
 
-export function generateMetadata(): Metadata {
+export async function generateMetadata({ params }: Args): Promise<Metadata> {
+  const { locale } = await params
+  const { getServerSideURL } = await import('@/utilities/getURL')
+  
+  // Construct the canonical URL for posts page
+  const serverUrl = getServerSideURL()
+  const localePath = locale !== 'en' ? `/${locale}` : ''
+  const canonicalUrl = `${serverUrl}${localePath}/posts`
+  
   return {
-    title: `Payload Website Template Posts`,
+    title: 'Payload Website Template Posts',
+    alternates: {
+      canonical: canonicalUrl,
+    },
   }
 }

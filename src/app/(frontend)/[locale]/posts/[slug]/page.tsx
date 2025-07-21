@@ -5,7 +5,7 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
+import { cache } from 'react'
 import RichText from '@/components/RichText'
 
 import type { Post } from '@/payload-types'
@@ -35,10 +35,13 @@ export async function generateStaticParams() {
   return params
 }
 
+interface PageParams {
+  slug?: string
+  locale: string
+}
+
 type Args = {
-  params: Promise<{
-    slug?: string
-  }>
+  params: Promise<PageParams>
 }
 
 export default async function Post({ params: paramsPromise }: Args) {
@@ -76,10 +79,17 @@ export default async function Post({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = '' } = await paramsPromise
+  const { slug = '', locale } = await paramsPromise
   const post = await queryPostBySlug({ slug })
 
-  return generateMeta({ doc: post })
+  // Construct the path for this post
+  const path = `/posts/${slug}`
+
+  return generateMeta({
+    doc: post,
+    locale,
+    path,
+  })
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {

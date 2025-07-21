@@ -1,3 +1,4 @@
+/* Tailwind CSS directives - IDE may show warnings but these are valid */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -64,27 +65,31 @@
   font-family: 'Avenir';
   src: url('/fonts/AvenirLTStd-Light.ttf');
   font-weight: 400;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Avenir';
   src: url('/fonts/AvenirLTStd-Medium.ttf');
   font-weight: 600;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Avenir';
   src: url('/fonts/AvenirLTStd-Heavy.ttf');
   font-weight: 800;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Avenir';
   src: url('/fonts/AvenirLTStd-Black.ttf');
   font-weight: 900;
+  font-display: swap;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Allura&family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400..900;1,6..96,400..9000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
 
 body {
   font-family: 'Avenir', sans-serif;

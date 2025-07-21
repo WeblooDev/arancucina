@@ -32,14 +32,22 @@ export const Card: React.FC<{
   return (
     <article
       className={cn(
-        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer focus-within:ring-2 focus-within:ring-primary',
         className,
       )}
       ref={card.ref}
+      aria-labelledby={`card-title-${slug}`}
     >
-      <div className="relative w-full ">
-        {!metaImage && <div className="">No image</div>}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
+      <div className="relative w-full">
+        {!metaImage && <div className="h-40 bg-muted flex items-center justify-center text-muted-foreground" aria-hidden="true">No image</div>}
+        {metaImage && typeof metaImage !== 'string' && 
+          <Media 
+            resource={metaImage} 
+            size="33vw" 
+            alt={`Featured image for ${titleToUse || 'article'}`}
+            role="img"
+          />
+        }
       </div>
       <div className="p-4">
         {showCategories && hasCategories && (
@@ -70,14 +78,23 @@ export const Card: React.FC<{
         )}
         {titleToUse && (
           <div className="prose">
-            <h3>
-              <Link className="not-prose" href={href} ref={link.ref}>
+            <h3 id={`card-title-${slug}`}>
+              <Link 
+                className="not-prose text-foreground hover:text-primary focus:outline-none focus:underline" 
+                href={href} 
+                ref={link.ref}
+                aria-label={`Read more about ${titleToUse}`}
+              >
                 {titleToUse}
               </Link>
             </h3>
           </div>
         )}
-        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
+        {description && 
+          <div className="mt-2">
+            <p className="text-muted-foreground text-sm">{sanitizedDescription}</p>
+          </div>
+        }
       </div>
     </article>
   )

@@ -19,4 +19,11 @@ export interface Props {
   size?: string // for NextImage only
   src?: StaticImageData // for static media
   videoClassName?: string
+  
+  // Accessibility attributes
+  role?: string
+  'aria-hidden'?: boolean
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
 }

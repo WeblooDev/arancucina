@@ -1630,10 +1630,10 @@ export interface PagesSelect<T extends boolean = true> {
         ourValuesBlock?: T | OurValuesBlockSelect<T>;
         HeadingBlock?: T | HeadingBlockSelect;
         WhoWeAreBlock?: T | WhoWeAreSelect;
-        DesignerBlock?: T | DesignerBlockSelect<T>;
-        MediaBGBlock?: T | MediaBGBlockSelect<T>;
-        ProductsList?: T | ProductsListSelect<T>;
-        mapBlock?: T | MapBlockSelect<T>;
+        DesignerBlock?: T | DesignerBlockSelect;
+        MediaBGBlock?: T | MediaBGBlockSelect;
+        ProductsList?: T | ProductsListSelect;
+        mapBlock?: T | MapBlockSelect;
       };
   meta?:
     | T
@@ -2159,10 +2159,10 @@ export interface ProductsSelect<T extends boolean = true> {
         ourValuesBlock?: T | OurValuesBlockSelect<T>;
         HeadingBlock?: T | HeadingBlockSelect;
         WhoWeAreBlock?: T | WhoWeAreSelect;
-        DesignerBlock?: T | DesignerBlockSelect<T>;
-        MediaBGBlock?: T | MediaBGBlockSelect<T>;
-        ProductIntroBlock?: T | ProductIntroBlockSelect<T>;
-        Carousel?: T | CarouselSelect<T>;
+        DesignerBlock?: T | DesignerBlockSelect;
+        MediaBGBlock?: T | MediaBGBlockSelect;
+        ProductIntroBlock?: T | ProductIntroBlockSelect;
+        Carousel?: T | CarouselSelect;
         HeadingWithText?: T | HeadingWithTextBlockSelect<T>;
         TabsBlock?: T | TabsBlockSelect;
         ParallaxBlock?: T | ParallaxBlockSelect;

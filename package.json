@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "arancucina",
   "version": "1.0.0",
   "description": "Website template for Payload",
   "license": "MIT",
@@ -16,7 +16,10 @@
     "lint:fix": "cross-env NODE_OPTIONS=--no-deprecation next lint --fix",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "analyze": "node scripts/analyze-bundle.js",
+    "build:analyze": "cross-env ANALYZE=true next build",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "@payloadcms/admin-bar": "3.37.0",
@@ -41,6 +44,7 @@
     "@react-pdf/renderer": "^4.3.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "critters": "^0.0.25",
     "cross-env": "^7.0.3",
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
@@ -62,10 +66,12 @@
     "react-responsive": "^10.0.1",
     "sharp": "0.32.6",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "web-vitals": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
+    "@next/bundle-analyzer": "^15.4.2",
     "@tailwindcss/typography": "^0.5.13",
     "@types/escape-html": "^1.0.2",
     "@types/node": "22.5.4",

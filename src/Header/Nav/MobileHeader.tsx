@@ -47,7 +47,7 @@ export const MobileHeaderNav: React.FC<{
   return (
     <div className="z-30 md:hidden">
       <div className="container flex items-center justify-between fixed top-0 left-0 right-0 z-40 bg-white py-8 px-6">
-        <Link href="/" className="z-40">
+        <Link href="/" className="z-40" aria-label="Home page">
           <Logo
             loading="eager"
             priority="high"
@@ -58,10 +58,13 @@ export const MobileHeaderNav: React.FC<{
           />
         </Link>
         <button
-          className={cn(' top-12 right-8 z-40', {
+          className={cn('top-12 right-8 z-40 p-2 focus:outline-none focus:ring-2 focus:ring-primary rounded', {
             '!right-[2.5rem]': isOpen,
           })}
           onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-controls="mobile-navigation"
+          aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
         >
           {isOpen ? (
             <X width={24} height={24} className="w-5 text-black transition-all duration-300" />
@@ -80,6 +83,7 @@ export const MobileHeaderNav: React.FC<{
         </button>
       </div>
       <nav
+        id="mobile-navigation"
         className={cn(
           'fixed top-0 h-screen w-full bg-white transition-all duration-300 overflow-y-auto',
           {
@@ -87,6 +91,9 @@ export const MobileHeaderNav: React.FC<{
             'right-full': !isOpen,
           },
         )}
+        aria-hidden={!isOpen}
+        role="navigation"
+        aria-label="Main navigation"
       >
         <div className="pt-20 pb-8 px-6">
           {navItems.map(({ link, sublinks }, i) => {
@@ -97,14 +104,24 @@ export const MobileHeaderNav: React.FC<{
               <div key={i} className="border-b border-gray-100 last:border-b-0">
                 {hasSublinks ? (
                   <div
-                    className="flex items-center justify-between py-4"
+                    className="flex items-center justify-between py-4 cursor-pointer"
                     onClick={() => toggleItem(i)}
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isExpanded}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleItem(i);
+                      }
+                    }}
                   >
                     <p
                       className={cn('text-lg flex-1 font-medium', {
                         'text-black font-medium': path === link.url,
-                        'text-gray-500': path !== link.url,
+                        'text-gray-700': path !== link.url,
                       })}
+                      id={`nav-item-${i}`}
                     >
                       {link.label}
                     </p>
@@ -175,7 +192,9 @@ export const MobileHeaderNav: React.FC<{
                                 {hasTypes && (
                                   <button
                                     onClick={() => toggleSubItem(subKey)}
-                                    className="p-1 -mr-1"
+                                    className="p-1 -mr-1 focus:outline-none focus:ring-2 focus:ring-primary rounded-full"
+                                    aria-label={isSubExpanded ? `Collapse submenu` : `Expand submenu`}
+                                    aria-expanded={isSubExpanded}
                                   >
                                     <ChevronRight
                                       className={cn(
@@ -217,7 +236,8 @@ export const MobileHeaderNav: React.FC<{
                                     <Link
                                       href={type.link.url!}
                                       key={k}
-                                      className="flex items-center space-x-3"
+                                      className="flex items-center space-x-3 focus:outline-none focus:ring-2 focus:ring-primary rounded p-1"
+                                      aria-label={`View ${type.link.label}`}
                                     >
                                       {type.image && (
                                         <div className="w-12 h-12 rounded-lg relative overflow-hidden flex-shrink-0">
@@ -225,6 +245,8 @@ export const MobileHeaderNav: React.FC<{
                                             resource={type.image}
                                             imgClassName="object-cover w-full h-full"
                                             fill
+                                            alt={`${type.link.label} thumbnail`}
+                                            aria-hidden={true}
                                           />
                                         </div>
                                       )}
