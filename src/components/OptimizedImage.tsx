@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
 import type { ImageProps } from 'next/image'
+import { cn } from '@/utilities/ui'
 
 interface OptimizedImageProps extends Omit<ImageProps, 'loading'> {
   loading?: 'lazy' | 'eager'
@@ -35,7 +36,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
       {
         threshold,
         rootMargin,
-      }
+      },
     )
 
     if (imgRef.current) {
@@ -50,7 +51,7 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
   }
 
   return (
-    <div ref={imgRef} className={className}>
+    <div ref={imgRef} className={cn(className, 'object-cover')}>
       {isInView && (
         <>
           <Image
@@ -63,7 +64,9 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
             style={{
               opacity: isLoaded ? 1 : 0,
               transition: 'opacity 0.3s ease-in-out',
+              objectFit: 'cover',
             }}
+            fill
           />
           {!isLoaded && (
             <div

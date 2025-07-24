@@ -29,7 +29,7 @@ export const HeaderNav: React.FC<{
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-controls="main-navigation"
-        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
       >
         {isOpen ? (
           <X
@@ -68,19 +68,19 @@ export const HeaderNav: React.FC<{
         <div className="flex-1 flex flex-col justify-center items-center">
           {navItems.map(({ link, sublinks }, i) => {
             return (
-              <div key={i} className="group z-20 py-6 w-full relative">
+              <div key={i} className="group z-20 py-6 w-full">
                 <CMSLink
                   key={i}
                   {...link}
                   appearance="link"
                   className={cn('text-md hover:text-black px-16', {
                     'text-black font-medium': path === link.url,
-                    'text-gray-700': path !== link.url, /* Improved contrast from gray-500 */
+                    'text-gray-700': path !== link.url /* Improved contrast from gray-500 */,
                   })}
                   aria-current={path === link.url ? 'page' : undefined}
                 />
                 {sublinks && sublinks?.length > 0 && (
-                  <div 
+                  <div
                     className="absolute h-screen w-full hidden group-hover:right-full right-0 top-0 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:flex flex-col justify-center items-end gap-6 bg-black text-white z-0 p-16 focus-within:opacity-100 focus-within:right-full"
                     role="menu"
                     aria-label={`${link.label} submenu`}
@@ -95,7 +95,8 @@ export const HeaderNav: React.FC<{
                           appearance="link"
                           className={cn('text-base hover:text-white whitespace-nowrap block mb-1', {
                             'text-white font-medium': path === link.url,
-                            'text-gray-200': path !== link.url, /* Improved contrast from gray-300 */
+                            'text-gray-200':
+                              path !== link.url /* Improved contrast from gray-300 */,
                           })}
                           aria-current={path === link.url ? 'page' : undefined}
                           role="menuitem"
@@ -119,7 +120,9 @@ export const HeaderNav: React.FC<{
                                       'text-xs hover:text-white whitespace-nowrap block mb-1 w-full focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-1 focus:rounded',
                                       {
                                         'text-white font-medium': path === type.link.url,
-                                        'text-gray-200': path !== type.link.url, /* Improved contrast from gray-300 */
+                                        'text-gray-200':
+                                          path !==
+                                          type.link.url /* Improved contrast from gray-300 */,
                                       },
                                     )}
                                     aria-current={path === type.link.url ? 'page' : undefined}
@@ -132,13 +135,19 @@ export const HeaderNav: React.FC<{
                                     <div className="h-screen w-[30vw] hidden relative right-0 top-0 opacity-0 group-hover/sublink-link:opacity-100 transition-all duration-300 group-hover/sublink-link:flex flex-col justify-end items-start gap-6 bg-black text-white z-0 p-12 focus-within:opacity-100 focus-within:flex">
                                       <Media
                                         resource={type.image}
-                                        imgClassName="object-cover"
+                                        imgClassName="!object-cover !w-auto !h-full"
                                         fill
                                         alt={`${type.link.label} category image`}
                                         aria-hidden={true}
                                       />
-                                      <div className="absolute inset-0 bg-black/30 z-20 h-full w-full" aria-hidden="true" />
-                                      <p className="text-2xl font-bodoni text-white z-50" id={`category-title-${k}`}>
+                                      <div
+                                        className="absolute inset-0 bg-black/30 z-20 h-full w-full"
+                                        aria-hidden="true"
+                                      />
+                                      <p
+                                        className="text-2xl font-bodoni text-white z-50"
+                                        id={`category-title-${k}`}
+                                      >
                                         {type.link.label}
                                       </p>
                                     </div>
