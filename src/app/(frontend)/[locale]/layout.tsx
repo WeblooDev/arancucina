@@ -56,6 +56,7 @@ export default async function RootLayout({
         />
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
         {/* Preload critical fonts */}
         <link
