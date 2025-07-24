@@ -87,17 +87,21 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
   )
 }
 
-export async function generateMetadata({ params }: { params: Promise<PageParams> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<PageParams>
+}): Promise<Metadata> {
   const { locale } = await params
   const { getServerSideURL } = await import('@/utilities/getURL')
-  
+
   // Construct the canonical URL for search page
   const serverUrl = getServerSideURL()
   const localePath = locale !== 'en' ? `/${locale}` : ''
   const canonicalUrl = `${serverUrl}${localePath}/search`
-  
+
   return {
-    title: 'Payload Website Template Search',
+    title: 'Aran Cucine | Search',
     alternates: {
       canonical: canonicalUrl,
     },

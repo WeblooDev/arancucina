@@ -67,14 +67,14 @@ export default async function Page({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber, locale } = await paramsPromise
   const { getServerSideURL } = await import('@/utilities/getURL')
-  
+
   // Construct the canonical URL for paginated posts page
   const serverUrl = getServerSideURL()
   const localePath = locale !== 'en' ? `/${locale}` : ''
   const canonicalUrl = `${serverUrl}${localePath}/posts/page/${pageNumber}`
-  
+
   return {
-    title: `Payload Website Template Posts Page ${pageNumber || ''}`,
+    title: `Aran Cucine | Posts Page ${pageNumber || ''}`,
     alternates: {
       canonical: canonicalUrl,
     },
@@ -89,9 +89,9 @@ export async function generateStaticParams() {
   })
 
   const totalPages = Math.ceil(totalDocs / 10)
-  
+
   // Use Array.from with mapping function instead of manual array building
   return Array.from({ length: totalPages }, (_, i) => ({
-    pageNumber: String(i + 1)
+    pageNumber: String(i + 1),
   }))
 }

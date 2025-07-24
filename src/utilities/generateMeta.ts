@@ -78,7 +78,7 @@ export const generateMeta = async (args: GenerateMetaArgs): Promise<Metadata> =>
 
   const ogImage = getImageURL(metaImage)
 
-  const title = metaTitle ? `${metaTitle} | Payload Website Template` : 'Payload Website Template'
+  const title = metaTitle ? `${metaTitle} | Aran Cucine` : 'Aran Cucine'
 
   // Construct the canonical URL
   const serverUrl = getServerSideURL()

@@ -66,14 +66,14 @@ export default async function Page({ params }: Args) {
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { locale } = await params
   const { getServerSideURL } = await import('@/utilities/getURL')
-  
+
   // Construct the canonical URL for posts page
   const serverUrl = getServerSideURL()
   const localePath = locale !== 'en' ? `/${locale}` : ''
   const canonicalUrl = `${serverUrl}${localePath}/posts`
-  
+
   return {
-    title: 'Payload Website Template Posts',
+    title: 'Aran Cucine | Posts',
     alternates: {
       canonical: canonicalUrl,
     },
