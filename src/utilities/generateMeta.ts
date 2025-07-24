@@ -10,10 +10,9 @@ import { getServerSideURL } from './getURL'
  */
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null): string => {
   const serverUrl = getServerSideURL()
-  const defaultOgImage = `${serverUrl}/website-template-OG.webp`
 
   // Return default if no image provided
-  if (!image) return defaultOgImage
+  if (!image) return `${serverUrl}/website-template-OG.webp`
 
   // Handle object type image with URL
   if (typeof image === 'object' && image !== null && 'url' in image) {
@@ -22,7 +21,7 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null): stri
     return ogUrl ? `${serverUrl}${ogUrl}` : `${serverUrl}${image.url}`
   }
 
-  return defaultOgImage
+  return `${serverUrl}/website-template-OG.webp`
 }
 
 interface GenerateMetaArgs {
@@ -76,8 +75,6 @@ export const generateMeta = async (args: GenerateMetaArgs): Promise<Metadata> =>
     }
   }
 
-  const ogImage = getImageURL(metaImage)
-
   const title = metaTitle ? `${metaTitle} | Aran Cucine` : 'Aran Cucine'
 
   // Construct the canonical URL
@@ -102,13 +99,6 @@ export const generateMeta = async (args: GenerateMetaArgs): Promise<Metadata> =>
     description: metaDescription,
     openGraph: mergeOpenGraph({
       description: metaDescription || '',
-      images: ogImage
-        ? [
-            {
-              url: ogImage,
-            },
-          ]
-        : undefined,
       title,
       url: canonicalPath,
     }),
