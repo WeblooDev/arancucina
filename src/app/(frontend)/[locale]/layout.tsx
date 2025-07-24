@@ -50,6 +50,10 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <meta
+          name="google-site-verification"
+          content="wNpPHZxghIz0KH978Wc4lRAQ5tPc9nlcLwCiz0MpS4o"
+        />
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
 
