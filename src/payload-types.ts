@@ -1628,8 +1628,8 @@ export interface PagesSelect<T extends boolean = true> {
         carouselBlock?: T | CarouselBlockSelect<T>;
         desigersBlock?: T | DesigersBlockSelect<T>;
         ourValuesBlock?: T | OurValuesBlockSelect<T>;
-        HeadingBlock?: T | HeadingBlockSelect;
-        WhoWeAreBlock?: T | WhoWeAreSelect;
+        HeadingBlock?: T | HeadingBlockSelect<T>;
+        WhoWeAreBlock?: T | WhoWeAreSelect<T>;
         DesignerBlock?: T | DesignerBlockSelect<T>;
         MediaBGBlock?: T | MediaBGBlockSelect<T>;
         ProductsList?: T | ProductsListSelect<T>;
@@ -2157,18 +2157,18 @@ export interface ProductsSelect<T extends boolean = true> {
         carouselBlock?: T | CarouselBlockSelect<T>;
         desigersBlock?: T | DesigersBlockSelect<T>;
         ourValuesBlock?: T | OurValuesBlockSelect<T>;
-        HeadingBlock?: T | HeadingBlockSelect;
-        WhoWeAreBlock?: T | WhoWeAreSelect;
+        HeadingBlock?: T | HeadingBlockSelect<T>;
+        WhoWeAreBlock?: T | WhoWeAreSelect<T>;
         DesignerBlock?: T | DesignerBlockSelect<T>;
         MediaBGBlock?: T | MediaBGBlockSelect<T>;
         ProductIntroBlock?: T | ProductIntroBlockSelect<T>;
         Carousel?: T | CarouselSelect<T>;
         HeadingWithText?: T | HeadingWithTextBlockSelect<T>;
-        TabsBlock?: T | TabsBlockSelect;
-        ParallaxBlock?: T | ParallaxBlockSelect;
+        TabsBlock?: T | TabsBlockSelect<T>;
+        ParallaxBlock?: T | ParallaxBlockSelect<T>;
         TextWithCarousel?: T | TextWithCarouselSelect<T>;
         DimensionsBlock?: T | DimensionsBlockSelect<T>;
-        CatalogueBlock?: T | CatalogueBlockSelect;
+        CatalogueBlock?: T | CatalogueBlockSelect<T>;
         TextImageColBlock?: T | TextImageColBlockSelect<T>;
       };
   meta?:
@@ -2303,7 +2303,7 @@ export interface DimensionsBlockSelect<T extends boolean = true> {
         images?:
           | T
           | {
-              TabsBlock?: T | TabsBlockSelect;
+              TabsBlock?: T | TabsBlockSelect<T>;
             };
         id?: T;
       };

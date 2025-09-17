@@ -50,7 +50,7 @@ export const FormBlock: React.FC<
   })
   const {
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
     register,
   } = formMethods
@@ -161,9 +161,29 @@ export const FormBlock: React.FC<
         )}
         <FormProvider {...formMethods}>
           {!isLoading && hasSubmitted && confirmationType === 'message' && (
-            <RichText data={confirmationMessage} />
+            <div
+              role="status"
+              aria-live="polite"
+              className="mb-6 flex items-start gap-3 rounded-lg border border-green-200 bg-green-50 p-4 text-green-800"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+                className="mt-0.5 h-5 w-5 text-green-600"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.72 15.72a.75.75 0 0 1-1.06 0l-3.22-3.22a.75.75 0 1 1 1.06-1.06l2.69 2.69 6.28-6.28a.75.75 0 1 1 1.06 1.06l-7 7Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <div>
+                <RichText data={confirmationMessage} />
+              </div>
+            </div>
           )}
-          {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
           {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
           {!hasSubmitted && (
             <form
@@ -202,8 +222,15 @@ export const FormBlock: React.FC<
                   })}
               </div>
 
-              <Button form={formID} type="submit" variant="default">
-                {submitButtonLabel}
+              <Button
+                form={formID}
+                type="submit"
+                variant="default"
+                disabled={isSubmitting || isLoading}
+                aria-busy={isSubmitting || isLoading}
+                aria-live="polite"
+              >
+                {isSubmitting || isLoading ? 'Sending…' : submitButtonLabel}
               </Button>
             </form>
           )}
