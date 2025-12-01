@@ -113,8 +113,8 @@ export default buildConfig({
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
-      logger: process.env.NODE_ENV !== 'production',
-      debug: process.env.NODE_ENV !== 'production',
+      // logger: process.env.NODE_ENV !== 'production',
+      // debug: process.env.NODE_ENV !== 'production',
     }),
   }),
   localization: {

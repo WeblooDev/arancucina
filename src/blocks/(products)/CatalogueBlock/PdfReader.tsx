@@ -45,7 +45,6 @@ export default function TestPDF({ pdfUrl }: { pdfUrl: string }) {
   const zoomContainerRef = useRef<HTMLDivElement>(null)
 
   const onDocumentLoadSuccess = ({ numPages, ...pdfDoc }: { numPages: number }) => {
-    console.log('PDF loaded successfully with', numPages, 'pages')
     setNumPages(numPages)
     setPdfDocument(pdfDoc)
     setIsLoading(false)

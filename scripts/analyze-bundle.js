@@ -4,11 +4,8 @@ const { execSync } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 
-console.log('🔍 Analyzing bundle size...\n')
-
 // Build the project first
 try {
-  console.log('Building project...')
   execSync('pnpm build', { stdio: 'inherit' })
 } catch (error) {
   console.error('Build failed:', error.message)
@@ -34,13 +31,12 @@ const getFileSize = (filePath) => {
 const analyzeDirectory = (dir, label) => {
   if (!fs.existsSync(dir)) return
 
-  console.log(`\n📁 ${label}:`)
   const files = fs.readdirSync(dir, { withFileTypes: true })
-  
+
   let totalSize = 0
   const fileData = []
 
-  files.forEach(file => {
+  files.forEach((file) => {
     if (file.isFile()) {
       const filePath = path.join(dir, file.name)
       const size = parseFloat(getFileSize(filePath))
@@ -51,13 +47,11 @@ const analyzeDirectory = (dir, label) => {
 
   // Sort by size (largest first)
   fileData.sort((a, b) => b.size - a.size)
-  
-  fileData.slice(0, 10).forEach(file => {
+
+  fileData.slice(0, 10).forEach((file) => {
     const sizeColor = file.size > 100 ? '🔴' : file.size > 50 ? '🟡' : '🟢'
-    console.log(`  ${sizeColor} ${file.name}: ${file.size} KB`)
   })
-  
-  console.log(`  📊 Total: ${totalSize.toFixed(2)} KB`)
+
 }
 
 // Analyze chunks
@@ -71,10 +65,3 @@ analyzeDirectory(cssDir, 'CSS Files')
 // Analyze media
 const mediaDir = path.join(staticDir, 'media')
 analyzeDirectory(mediaDir, 'Media Files')
-
-console.log('\n✅ Bundle analysis complete!')
-console.log('\n💡 Optimization tips:')
-console.log('  • Files over 100KB should be code-split')
-console.log('  • Consider lazy loading for non-critical components')
-console.log('  • Use dynamic imports for heavy libraries')
-console.log('  • Optimize images with next/image')
