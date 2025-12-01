@@ -7,6 +7,11 @@ declare global {
       VERCEL_PROJECT_PRODUCTION_URL: string
     }
   }
+
+  interface Window {
+    fbq: (track: string, event: string, data?: Record<string, unknown>) => void
+    dataLayer: Record<string, unknown>[]
+  }
 }
 
 // If this file has no import/export statements (i.e. is a script)

@@ -103,8 +103,13 @@ export const FormBlock: React.FC<
             return
           }
 
-          setIsLoading(false)
+                  setIsLoading(false)
           setHasSubmitted(true)
+
+          // Track Lead event with Meta Pixel
+          if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+            window.fbq('track', 'Lead')
+          }
 
           if (confirmationType === 'redirect' && redirect) {
             const { url } = redirect
