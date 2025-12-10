@@ -103,12 +103,19 @@ export const FormBlock: React.FC<
             return
           }
 
-                  setIsLoading(false)
+          setIsLoading(false)
           setHasSubmitted(true)
 
           // Track Lead event with Meta Pixel
-          if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-            window.fbq('track', 'Lead')
+          try {
+            if (typeof window !== 'undefined' && window.fbq) {
+              window.fbq('track', 'Lead')
+              console.log('[Meta Pixel] Lead event tracked successfully')
+            } else {
+              console.warn('[Meta Pixel] fbq not available')
+            }
+          } catch (pixelError) {
+            console.error('[Meta Pixel] Error tracking Lead event:', pixelError)
           }
 
           if (confirmationType === 'redirect' && redirect) {

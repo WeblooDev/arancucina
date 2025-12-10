@@ -62,7 +62,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* End Google Tag Manager */}
 
         {/* Meta Pixel Code */}
-        <Script id="meta-pixel-4248031788788352" strategy='beforeInteractive'>
+        <Script id="meta-pixel-4248031788788352" strategy='afterInteractive'>
           {`!function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
