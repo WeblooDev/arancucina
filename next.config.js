@@ -38,8 +38,8 @@ const nextConfig = {
   },
   // Optimize JavaScript bundles
   compiler: {
-    // Remove console.log in production
-    removeConsole: process.env.NODE_ENV === 'production',
+    // Keep all console statements
+    removeConsole: false,
   },
   // Enable compression
   compress: true,
@@ -65,11 +65,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://www.facebook.com;
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://*.google-analytics.com https://connect.facebook.net https://www.facebook.com https://*.facebook.net;
               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-              img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com https://www.facebook.com https://*.facebook.com ${NEXT_PUBLIC_SERVER_URL};
-              font-src 'self' https://fonts.gstatic.com;
-              connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.facebook.com https://*.facebook.com https://connect.facebook.net;
+              img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com https://www.facebook.com https://*.facebook.com https://*.facebook.net ${NEXT_PUBLIC_SERVER_URL};
+              font-src 'self' data: https://fonts.gstatic.com;
+              connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://www.facebook.com https://*.facebook.com https://connect.facebook.net https://*.facebook.net;
               frame-src 'self' https://www.facebook.com https://*.facebook.com;
               object-src 'none';
               base-uri 'self';

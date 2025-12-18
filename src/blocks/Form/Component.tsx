@@ -108,14 +108,28 @@ export const FormBlock: React.FC<
 
           // Track Lead event with Meta Pixel
           try {
-            if (typeof window !== 'undefined' && window.fbq) {
-              window.fbq('track', 'Lead')
-              console.log('[Meta Pixel] Lead event tracked successfully')
-            } else {
-              console.warn('[Meta Pixel] fbq not available')
+            if (typeof window !== 'undefined') {
+              // Check if fbq is available (script might be blocked by ad blockers)
+              if (typeof window.fbq === 'function') {
+                window.fbq('track', 'Lead')
+                // eslint-disable-next-line no-console
+                console.info('[Meta Pixel] Lead event tracked successfully')
+              } else {
+                // Fallback: Send to Facebook Pixel via image beacon
+                const pixelId = '4248031788788352'
+                const img = document.createElement('img')
+                img.src = `https://www.facebook.com/tr?id=${pixelId}&ev=Lead&noscript=1`
+                img.width = 1
+                img.height = 1
+                img.style.display = 'none'
+                // eslint-disable-next-line no-console
+                console.info('[Meta Pixel] Lead event sent via image beacon (fbq blocked)')
+              }
             }
           } catch (pixelError) {
-            console.error('[Meta Pixel] Error tracking Lead event:', pixelError)
+            // Silent fail - don't break form submission for tracking issues
+            // eslint-disable-next-line no-console
+            console.warn('[Meta Pixel] Error tracking Lead event:', pixelError)
           }
 
           if (confirmationType === 'redirect' && redirect) {
@@ -126,7 +140,7 @@ export const FormBlock: React.FC<
             if (redirectUrl) router.push(redirectUrl)
           }
         } catch (err) {
-          console.warn(err)
+          console.log(err)
           setIsLoading(false)
           setError({
             message: 'Something went wrong.',

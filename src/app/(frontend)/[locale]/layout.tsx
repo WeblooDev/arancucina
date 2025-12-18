@@ -52,7 +52,7 @@ export default async function RootLayout({
     >
       <head>
         {/* Google Tag Manager */}
-        <Script id="gtm-5866535s" strategy='beforeInteractive'>
+        <Script id="gtm-5866535s" strategy="beforeInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -61,20 +61,36 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </Script>
         {/* End Google Tag Manager */}
 
-        {/* Meta Pixel Code */}
-        <Script id="meta-pixel-4248031788788352" strategy='afterInteractive'>
-          {`!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '4248031788788352');
-fbq('track', 'PageView');`}
+        {/* Meta Pixel Code - with fallback for blocked scripts */}
+        <Script id="meta-pixel-4248031788788352" strategy="afterInteractive">
+          {`(function() {
+  try {
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;
+    t.onerror=function(){
+      console.info('[Meta Pixel] Script blocked, using image beacon fallback');
+    };
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    
+    // Initialize pixel and track PageView
+    if(typeof fbq === 'function') {
+      fbq('init', '4248031788788352');
+      fbq('track', 'PageView');
+    }
+  } catch(e) {
+    console.info('[Meta Pixel] Initialization error:', e.message);
+  }
+})();`}
         </Script>
         <noscript>
+          {/* Fallback for users with JavaScript disabled or blocked scripts */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             height="1"
             width="1"
@@ -89,21 +105,7 @@ fbq('track', 'PageView');`}
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-        {/* Preload critical fonts */}
-        <link
-          rel="preload"
-          href="/_next/static/media/geist-sans.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/_next/static/media/geist-mono.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
+        {/* Geist fonts are loaded automatically by the geist package - no manual preload needed */}
 
         {/* DNS prefetch for external resources */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />

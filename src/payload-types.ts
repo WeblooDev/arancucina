@@ -2159,17 +2159,17 @@ export interface ProductsSelect<T extends boolean = true> {
         ourValuesBlock?: T | OurValuesBlockSelect<T>;
         HeadingBlock?: T | HeadingBlockSelect;
         WhoWeAreBlock?: T | WhoWeAreSelect;
-        DesignerBlock?: T | DesignerBlockSelect<T>;
-        MediaBGBlock?: T | MediaBGBlockSelect<T>;
-        ProductIntroBlock?: T | ProductIntroBlockSelect<T>;
-        Carousel?: T | CarouselSelect<T>;
-        HeadingWithText?: T | HeadingWithTextBlockSelect<T>;
+        DesignerBlock?: T | DesignerBlockSelect;
+        MediaBGBlock?: T | MediaBGBlockSelect;
+        ProductIntroBlock?: T | ProductIntroBlockSelect;
+        Carousel?: T | CarouselSelect;
+        HeadingWithText?: T | HeadingWithTextBlockSelect;
         TabsBlock?: T | TabsBlockSelect;
         ParallaxBlock?: T | ParallaxBlockSelect;
-        TextWithCarousel?: T | TextWithCarouselSelect<T>;
-        DimensionsBlock?: T | DimensionsBlockSelect<T>;
+        TextWithCarousel?: T | TextWithCarouselSelect;
+        DimensionsBlock?: T | DimensionsBlockSelect;
         CatalogueBlock?: T | CatalogueBlockSelect;
-        TextImageColBlock?: T | TextImageColBlockSelect<T>;
+        TextImageColBlock?: T | TextImageColBlockSelect;
       };
   meta?:
     | T
